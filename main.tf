@@ -49,7 +49,7 @@ resource "aws_lambda_function" "this" {
   runtime          = "python3.9"
   source_code_hash = data.archive_file.this.output_base64sha256
 
-  reserved_concurrent_executions = var.lambda_concurrency
+  # reserved_concurrent_executions = var.lambda_concurrency
 
   environment {
     variables = {
