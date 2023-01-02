@@ -49,24 +49,9 @@ def repo_tags():
     return tags
 
 
-def is_managed_repo(repo):
-    managed_prefixes = get_env_var("MANAGED_REPO_PREFIXES").split(",")
-    for prefix in managed_prefixes:
-        if repo.startswith(prefix.strip()):
-            return True
-    return False
-
-
 def run(event, context):
     account_id = event["account"]
     repository = event["detail"]["requestParameters"]["repositoryName"]
-
-    if not is_managed_repo(repository):
-        logger.warning(
-            "repository name %s doesn't match any of the MANAGED_REPO_PREFIXES",
-            repository,
-        )
-        return
 
     client = boto3.client("ecr")
 
